@@ -3,25 +3,25 @@ import got from "got";
 import ora from "ora";
 import { red } from "picocolors";
 import prompts from "prompts";
-import { ModelConfigParams } from ".";
+import { ModelConfigParams, ModelConfigQuestionsParams } from ".";
 import { questionHandlers } from "../../questions";
 
-const LLMHUB_API_URL = "https://llm-server.llmhub.t-systems.net/";
+const LLMHUB_API_URL = "https://llm-server.llmhub.t-systems.net/v2";
 
-const DEFAULT_MODEL = "gpt-3.5-turbo";
-const DEFAULT_EMBEDDING_MODEL = "text-embedding-3-large";
+const DEFAULT_MODEL = "Mixtral-8x7B-Instruct-v0.1";
+const DEFAULT_EMBEDDING_MODEL = "text-embedding-bge-m3";
 
-type LLMHubQuestionsParams = {
-  apiKey?: string;
-  askModels: boolean;
-};
+// type LLMHubQuestionsParams = {
+//   apiKey?: string;
+//   askModels: boolean;
+// };
 
 export async function askLLMHubQuestions({
   askModels,
-  apiKey,
-}: LLMHubQuestionsParams): Promise<ModelConfigParams> {
+  LLMHubKey,
+}: ModelConfigQuestionsParams): Promise<ModelConfigParams> {
   const config: ModelConfigParams = {
-    apiKey,
+    apiKey: LLMHubKey,
     model: DEFAULT_MODEL,
     embeddingModel: DEFAULT_EMBEDDING_MODEL,
     dimensions: getDimensions(DEFAULT_EMBEDDING_MODEL),
@@ -143,6 +143,5 @@ async function getAvailableModelChoices(
 }
 
 function getDimensions(modelName: string) {
-  // Assuming dimensions similar to OpenAI for simplicity. Update if different.
   return modelName === "text-embedding-004" ? 768 : 1536;
 }

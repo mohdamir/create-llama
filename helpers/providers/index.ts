@@ -12,6 +12,7 @@ const DEFAULT_MODEL_PROVIDER = "openai";
 
 export type ModelConfigQuestionsParams = {
   openAiKey?: string;
+  LLMHubKey?: string;
   askModels: boolean;
 };
 
@@ -20,6 +21,7 @@ export type ModelConfigParams = Omit<ModelConfig, "provider">;
 export async function askModelConfig({
   askModels,
   openAiKey,
+  LLMHubKey,
 }: ModelConfigQuestionsParams): Promise<ModelConfig> {
   let modelProvider: ModelProvider = DEFAULT_MODEL_PROVIDER;
   if (askModels && !ciInfo.isCI) {
@@ -54,7 +56,7 @@ export async function askModelConfig({
       modelConfig = await askGeminiQuestions({ askModels });
       break;
     case "t-systems":
-      modelConfig = await askLLMHubQuestions({ askModels });
+      modelConfig = await askLLMHubQuestions({ LLMHubKey, askModels });
       break;
     default:
       modelConfig = await askOpenAIQuestions({
