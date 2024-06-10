@@ -6,7 +6,7 @@ import prompts from "prompts";
 import { ModelConfigParams } from ".";
 import { questionHandlers } from "../../questions";
 
-const LLMHUB_API_URL = "https://llm-server.llmhub.t-systems.net/";
+const LLMHUB_API_URL = "https://llm-server.llmhub.t-systems.net/v2";
 
 const DEFAULT_MODEL = "gpt-3.5-turbo";
 const DEFAULT_EMBEDDING_MODEL = "text-embedding-3-large";
