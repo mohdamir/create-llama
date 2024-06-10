@@ -1,6 +1,9 @@
+import os
+from typing import Dict
 from llama_index.llms.openai import OpenAI
 from llama_index.llms.openai_like import OpenAILike
 from llama_index.embeddings.openai import OpenAIEmbedding
+
 
 class TSIEmbedding(OpenAIEmbedding):
     def __init__(self, **kwargs):
@@ -10,11 +13,11 @@ class TSIEmbedding(OpenAIEmbedding):
 def llm_config_from_env() -> Dict:
     from llama_index.core.constants import DEFAULT_TEMPERATURE
 
-    model = os.getenv("MODEL")
+    model = os.getenv("MODEL", "Mixtral-8x7B-Instruct-v0.1")
     temperature = os.getenv("LLM_TEMPERATURE", DEFAULT_TEMPERATURE)
     max_tokens = os.getenv("LLM_MAX_TOKENS")
     api_key = os.getenv("TSI_API_KEY")
-    api_base = os.getenv("TSI_API_BASE_URL")
+    api_base = os.getenv("TSI_API_BASE_URL", "https://llm-server.llmhub.t-systems.net/v2")
 
     config = {
         "model": model,
@@ -30,7 +33,7 @@ def embedding_config_from_env() -> Dict:
     model = os.getenv("EMBEDDING_MODEL")
     dimension = os.getenv("EMBEDDING_DIM")
     api_key = os.getenv("TSI_API_KEY")
-    api_base = os.getenv("TSI_EMBED_API_BASE_URL")
+    api_base = os.getenv("TSI_EMBED_API_BASE_URL", "https://llm-server.llmhub.t-systems.net/v2")
 
     config = {
         "model_name": model,

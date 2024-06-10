@@ -140,7 +140,11 @@ def init_llmhub():
 
     Settings.embed_model = TSIEmbedding(**embedding_configs)
     Settings.llm = OpenAILike(
-        **llm_configs,
+        api_base=llm_configs["api_base"],
+        api_key=llm_configs["api_key"],
+        model=llm_configs["model"],
+        temperature=llm_configs["temperature"],
+        max_tokens=llm_configs["max_tokens"],
         is_chat_model=True,
         is_function_calling_model=False,
         context_window=4096,
